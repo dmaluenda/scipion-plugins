@@ -25,3 +25,6 @@
 [submodule "scipion-em-imagic"]
 	path = scipion-em-imagic
 	url = git@github.com:scipion-em/scipion-em-imagic.git
+[submodule "scipion-em-grigoriefflab"]
+	path = scipion-em-grigoriefflab
+	url = https://github.com/scipion-em/scipion-em-grigoriefflab.git
