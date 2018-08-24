@@ -1,0 +1,7 @@
+{
+   "xmipp3": {
+       "name":"xmipp3",
+       "pipName": "xmipp3",
+       "pluginSourceUrl":"/home/david/XmippBundle/src/scipion-em-xmipp"
+   }
+}
