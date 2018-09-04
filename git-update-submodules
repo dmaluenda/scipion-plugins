@@ -13,7 +13,7 @@ else
 	branch=devel
 fi
 
-# git submodule foreach "git checkout $branch; git pull --prune"
+git submodule foreach "git checkout $branch; git pull --prune"
 
 cmName="Updating the submodules for $branch branch on $(date +"%d/%m/%Y")"
 echo "Commiting it with name '$cmName'"
