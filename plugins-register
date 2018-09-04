@@ -1,1 +1,13 @@
-/home/david/Dropbox/usrScripts/plugins-register
+#!/bin/bash
+
+
+export PYTHONPATH=~/xmipp-bundle/src/scipion-em-xmipp:$PYTHONPATH
+
+scipionPlugins=`ls -d ~/scipion-plugins/scipion-em-*`
+for plugin in $scipionPlugins
+do
+	export PYTHONPATH=$plugin:$PYTHONPATH
+done
+
+echo "scipion plugins installed via setting PYTHONPATH"
+echo " > PYTHONPATH="$PYTHONPATH
