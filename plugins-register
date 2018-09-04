@@ -11,3 +11,4 @@ done
 
 echo "scipion plugins installed via setting PYTHONPATH"
 echo " > PYTHONPATH="$PYTHONPATH
+
