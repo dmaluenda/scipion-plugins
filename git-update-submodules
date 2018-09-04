@@ -1,0 +1,23 @@
+#!/bin/bash
+
+
+if [ $# -gt 2 ]; then
+	echo "Use it to update all the submodules of this repository and "
+	echo "commit+push the changes (the commit will contain the today's date):"
+	echo ""
+	echo " -> usage: git-update-submodules [branch=devel]"
+	echo ""
+elif [ $# -eq 1 ]; then
+	branch=$1
+else
+	branch=devel
+fi
+
+# git submodule foreach "git checkout $branch; git pull --prune"
+
+cmName="Updating the submodules for $branch branch on $(date +"%d/%m/%Y")"
+echo "Commiting it with name $cmName"
+git commit -am "$cmName"
+
+echo "Pushing it..."
+git push
