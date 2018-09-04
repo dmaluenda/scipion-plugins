@@ -16,7 +16,7 @@ fi
 # git submodule foreach "git checkout $branch; git pull --prune"
 
 cmName="Updating the submodules for $branch branch on $(date +"%d/%m/%Y")"
-echo "Commiting it with name $cmName"
+echo "Commiting it with name \'$cmName\'"
 git commit -am "$cmName"
 
 echo "Pushing it..."
