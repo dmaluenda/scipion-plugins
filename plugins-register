@@ -1,38 +1,107 @@
-#!/bin/bash
+#!/usr/bin/python
 
-if [ $# -gt 2 ]; then
-	echo "Use it to update all the submodules of this repository and "
-	echo "commit+push the changes (the commit will contain the today's date):"
-	echo ""
-	echo " -> usage: source plugins-register [PLUGINS_HOME=~/scipion-plugins] [XMIPP_HOME=~/xmipp-bundle]"
-	echo ""
-else
-if [ $# -eq 1 ]; then
-	PLUGINS_HOME=$1
-	XMIPP_HOME=~/xmipp-bundle
-elif [ $# -eq 2 ]; then
-	PLUGINS_HOME=$1
-	XMIPP_HOME=$2
-else
-	PLUGINS_HOME=~/scipion-plugins
-	XMIPP_HOME=~/xmipp-bundle
-fi
+import sys, os
+from os.path import join, expanduser, exists
+import subprocess
+
+ph = expanduser
+
+def usage(msg=''):
+	print(msg+
+		  "\n -help:\n"
+		  "Use it to register all the plugins inside the PLUGINS_HOME and XMIPP_HOME\n"
+	      "to scipion. It's done via symbolic link (default) or via PYTHONPATH (-env)\n"
+	      "\n"
+	      " -> usage: plugins-register [options]\n"
+	      "       options: SCIPION_HOME = ~/scipion\n"
+	      "                PLUGINS_HOME = ~/scipion-em\n"
+	      "                XMIPP_HOME   = ~/xmipp-bundle\n"
+	      "                -env : to set the PYTHONPATH instead of making a symbolic link\n"
+	      "\n"
+	      " -> example: plugins-register SCIPION_HOME=~/scipion-pluginized PLUGINS_HOME=~/plugins2scipion\n")
+	sys.exit()
+
+def CheckPath(pathStr, ok=True):
+	path = eval(pathStr)
+	if os.path.exists(path):
+		print("%s = %s ... ok!" % (pathStr, path))
+		return ok
+	else:
+		print("%s not found... please check the %s" % (path, pathStr))
+		return False
+
+def link(src, dst):
+	if exists(dst) or os.path.islink(dst):
+		msg = "%s already is existing, re" % dst.split('/')[-1]
+		os.remove(dst)
+	else:
+		msg = "%s " % dst.split('/')[-1]
+	os.symlink(src, dst)
+	if exists(dst):
+		print("%sinstalled via symbolic link" % msg)
+	else:
+		print("%sinstalling... there was a problem. Not installed" % msg)
 
 
-export PYTHONPATH=$XMIPP_HOME/src/scipion-em-xmipp:$PYTHONPATH
+mode='ln'
+SCIPION_HOME = ph('~/scipion')
+PLUGINS_HOME = ph('~/scipion-em')
+XMIPP_HOME   = ph('~/xmipp-bundle')
+for arg in sys.argv[1:]:
+	if arg.startswith('-'):
+		if arg == '-env':
+			mode = 'env'
+	elif '=' in arg:
+		path = arg.split('=')[1]
+		if arg.startswith('XMIPP_HOME='):
+			XMIPP_HOME = ph(path)
+		elif arg.startswith('PLUGINS_HOME='):
+			PLUGINS_HOME = ph(path)
+		elif arg.startswith('SCIPION_HOME='):
+			SCIPION_HOME = ph(path)
+		else:
+			usage("...error: param %s is not understood\n" % arg)
+	else:
+		usage("...error: param %s is not understood\n" % arg)
 
-scipionPlugins=`ls -d $PLUGINS_HOME/scipion-em-*`
-for plugin in $scipionPlugins
-do
-	export PYTHONPATH=$plugin:$PYTHONPATH
-done
+ok = True
+ok = CheckPath("XMIPP_HOME", ok)
+ok = CheckPath("PLUGINS_HOME", ok)
+ok = CheckPath("SCIPION_HOME", ok)
+if not ok:
+	usage()
 
-echo ""
-echo "scipion plugins installed via setting PYTHONPATH"
-echo ""
-echo "PYTHONPATH="$PYTHONPATH
-echo ""
-echo "please run 'echo \$PYTHONPATH' to check that is correct."
-echo "If it's not correct, make sure that you run it as 'source plugins-register'"
 
-fi
+scipionPlugins = []
+for folder in os.listdir(PLUGINS_HOME):
+	if folder.startswith('scipion-em-'):
+		scipionPlugins.append(folder)
+
+if mode == 'env':
+
+	pyPath = os.environ.get('PYTHONPATH','')
+	pyPathList = [pyPath, join(XMIPP_HOME,'src','scipion-em-xmipp')]
+
+	print("plugins found:")
+	for plugin in scipionPlugins:
+		pyPathList.append(plugin)
+		print(" -> %s" % plugin)
+
+	os.environ.update({'PYTHONPATH': ':'.join(pyPathList)	})
+
+	print("")
+	print("This plugins WILL be installed via setting PYTHONPATH once you run the folowing command:")
+	print("")
+	print("  export PYTHONPATH=%s" % os.environ.get('PYTHONPATH'))
+
+else:
+
+	plugDest = join(SCIPION_HOME,"software","lib","python2.7","site-packages")
+
+	link(join(XMIPP_HOME,'src','scipion-em-xmipp','xmipp3'), join(plugDest,'xmipp3'))
+
+
+	for plugin in scipionPlugins:
+		pluginName = plugin.split('-')[-1]
+		link(join(PLUGINS_HOME, plugin, pluginName), join(plugDest, pluginName))
+
