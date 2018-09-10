@@ -1,14 +1,38 @@
 #!/bin/bash
 
+if [ $# -gt 2 ]; then
+	echo "Use it to update all the submodules of this repository and "
+	echo "commit+push the changes (the commit will contain the today's date):"
+	echo ""
+	echo " -> usage: source plugins-register [PLUGINS_HOME=~/scipion-plugins] [XMIPP_HOME=~/xmipp-bundle]"
+	echo ""
+else
+if [ $# -eq 1 ]; then
+	PLUGINS_HOME=$1
+	XMIPP_HOME=~/xmipp-bundle
+elif [ $# -eq 2 ]; then
+	PLUGINS_HOME=$1
+	XMIPP_HOME=$2
+else
+	PLUGINS_HOME=~/scipion-plugins
+	XMIPP_HOME=~/xmipp-bundle
+fi
 
-export PYTHONPATH=~/xmipp-bundle/src/scipion-em-xmipp:$PYTHONPATH
 
-scipionPlugins=`ls -d ~/scipion-plugins/scipion-em-*`
+export PYTHONPATH=$XMIPP_HOME/src/scipion-em-xmipp:$PYTHONPATH
+
+scipionPlugins=`ls -d $PLUGINS_HOME/scipion-em-*`
 for plugin in $scipionPlugins
 do
 	export PYTHONPATH=$plugin:$PYTHONPATH
 done
 
+echo ""
 echo "scipion plugins installed via setting PYTHONPATH"
-echo " > PYTHONPATH="$PYTHONPATH
+echo ""
+echo "PYTHONPATH="$PYTHONPATH
+echo ""
+echo "please run 'echo \$PYTHONPATH' to check that is correct."
+echo "If it's not correct, make sure that you run it as 'source plugins-register'"
 
+fi
