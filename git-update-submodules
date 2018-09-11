@@ -21,3 +21,4 @@ git commit -am "$cmName"
 
 echo "Pushing it..."
 git push
+echo " "
