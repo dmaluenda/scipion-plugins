@@ -18,7 +18,7 @@ for plugin in $scipionPlugins
 do
 	echo 
 	cd $plugin
-	echo " --- Updating plugin: $plugin ---"
+	echo " ---  Updating plugin: $plugin  ---"
 
 	# skipping working branches
 	git_status="$(git status 2> /dev/null)"
@@ -45,9 +45,12 @@ done
 echo 
 echo 
 
+echo " ---  COMMITING IT TO THE SUBMODULES HOST  ---"
 cmName="Updating the submodules for $branch branch on $(date +"%d/%m/%Y")"
+echo
 echo "Commiting it with name '$cmName'"
 git commit -am "$cmName"
 
+echo
 echo "Pushing it..."
 git push
