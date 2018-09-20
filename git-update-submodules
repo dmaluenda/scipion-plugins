@@ -26,9 +26,16 @@ function co_to_br_or_master() {
     	echo $git_status
     fi
 	}
-# export -f co_to_br_or_master
 
-git submodule foreach "$(declare -pf co_to_br_or_master); co_to_br_or_master $branch; git pull --prune; echo "
+git submodule foreach "export git_status=$(git checkout $branch 2>&1);
+                       if [[ $git_status == "error: pathspec 'devel' did not match*" ]]
+                       then
+                       	 echo "$br branch not found. Trying master..."
+                       	 git checkout master
+                       else
+                       	 echo $git_status
+                       fi
+                       git pull --prune; echo "
 
 cmName="Updating the submodules for $branch branch on $(date +"%d/%m/%Y")"
 echo "Commiting it with name '$cmName'"
