@@ -28,7 +28,7 @@ function co_to_br_or_master() {
 	}
 # export -f co_to_br_or_master
 
-git submodule foreach ""$(declare -pf co_to_br_or_master); co_to_br_or_master $branch"; git pull --prune; echo "
+git submodule foreach "$(declare -pf co_to_br_or_master); co_to_br_or_master $branch; git pull --prune; echo "
 
 cmName="Updating the submodules for $branch branch on $(date +"%d/%m/%Y")"
 echo "Commiting it with name '$cmName'"
