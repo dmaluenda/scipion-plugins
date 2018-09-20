@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
-import sys, os
-from os.path import join, expanduser, exists
+import sys, os, shutil
+from os.path import join, expanduser, exists, islink, isdir
 import subprocess
 
 ph = expanduser
@@ -17,6 +17,7 @@ def usage(msg=''):
 	      "                PLUGINS_HOME = ~/scipion-em\n"
 	      "                XMIPP_HOME   = ~/xmipp-bundle\n"
 	      "                -env : to set the PYTHONPATH instead of making a symbolic link\n"
+	      "                -clean: remove all the plugins. By link (default) or PYTHONPATH\n"
 	      "\n"
 	      " -> example: plugins-register SCIPION_HOME=~/scipion-pluginized PLUGINS_HOME=~/plugins2scipion\n")
 	sys.exit()
@@ -31,9 +32,12 @@ def CheckPath(pathStr, ok=True):
 		return False
 
 def link(src, dst):
-	if exists(dst) or os.path.islink(dst):
+	if islink(dst):
 		msg = "%s already is existing, re" % dst.split('/')[-1]
 		os.remove(dst)
+	elif isdir(dst):
+		msg = "%s already is existing, re" % dst.split('/')[-1]
+		shutil.rmtree(dst)
 	else:
 		msg = "%s " % dst.split('/')[-1]
 	os.symlink(src, dst)
@@ -42,8 +46,22 @@ def link(src, dst):
 	else:
 		print("%sinstalling... there was a problem. Not installed" % msg)
 
+def remove(plugFn):
+	if islink(plugFn):
+		os.remove(plugFn)
+		plugName = plugFn.split('/')[-1]
+		print("%s uninstalled" % plugName)
 
-mode='ln'
+def findPlugName(pluginDir):
+	pluginContent = os.listdir(pluginDir)
+	for firstDir in pluginContent:
+		if isdir(join(pluginDir, firstDir)):
+			return firstDir
+	return None
+
+
+mode = 'ln'
+clean = False
 SCIPION_HOME = ph('~/scipion')
 PLUGINS_HOME = ph('~/scipion-em')
 XMIPP_HOME   = ph('~/xmipp-bundle')
@@ -51,6 +69,8 @@ for arg in sys.argv[1:]:
 	if arg.startswith('-'):
 		if arg == '-env':
 			mode = 'env'
+		if arg == '-clean':
+			clean = True
 	elif '=' in arg:
 		path = arg.split('=')[1]
 		if arg.startswith('XMIPP_HOME='):
@@ -67,7 +87,7 @@ for arg in sys.argv[1:]:
 ok = True
 ok = CheckPath("XMIPP_HOME", ok)
 ok = CheckPath("PLUGINS_HOME", ok)
-ok = CheckPath("SCIPION_HOME", ok)
+ok = True if mode=='env' else CheckPath("SCIPION_HOME", ok)
 if not ok:
 	usage()
 
@@ -78,30 +98,45 @@ for folder in os.listdir(PLUGINS_HOME):
 		scipionPlugins.append(folder)
 
 if mode == 'env':
+	if clean:
+		print(" run 'unset PYTHONPATH' to uninstall all plugins.\n"
+			  "  ...some other paths will be deleted...")
+		sys.exit()
+	else:
+		pyPath = os.environ.get('PYTHONPATH','')
+		pyPathList = [pyPath, join(XMIPP_HOME,'src','scipion-em-xmipp')]
 
-	pyPath = os.environ.get('PYTHONPATH','')
-	pyPathList = [pyPath, join(XMIPP_HOME,'src','scipion-em-xmipp')]
+		print("plugins found:")
+		for plugin in scipionPlugins:
+			pyPathList.append(plugin)
+			print(" -> %s" % plugin)
 
-	print("plugins found:")
-	for plugin in scipionPlugins:
-		pyPathList.append(plugin)
-		print(" -> %s" % plugin)
+		os.environ.update({'PYTHONPATH': ':'.join(pyPathList)	})
 
-	os.environ.update({'PYTHONPATH': ':'.join(pyPathList)	})
-
-	print("")
-	print("This plugins WILL be installed via setting PYTHONPATH once you run the folowing command:")
-	print("")
-	print("  export PYTHONPATH=%s" % os.environ.get('PYTHONPATH'))
+		print("")
+		print("This plugins WILL be installed via setting PYTHONPATH once you run the folowing command:")
+		print("")
+		print("  export PYTHONPATH=%s" % os.environ.get('PYTHONPATH'))
 
 else:
 
 	plugDest = join(SCIPION_HOME,"software","lib","python2.7","site-packages")
 
-	link(join(XMIPP_HOME,'src','scipion-em-xmipp','xmipp3'), join(plugDest,'xmipp3'))
+	if clean:
+		remove(join(plugDest,'xmipp3'))
+	else:
+		link(join(XMIPP_HOME,'src','scipion-em-xmipp','xmipp3'), join(plugDest,'xmipp3'))
 
 
 	for plugin in scipionPlugins:
-		pluginName = plugin.split('-')[-1]
-		link(join(PLUGINS_HOME, plugin, pluginName), join(plugDest, pluginName))
+		pluginDir = join(PLUGINS_HOME, plugin)
 
+		pluginName = findPlugName(pluginDir)
+
+		if pluginName is None:
+			print("Plugin not found in %s" % pluginDir)
+			continue
+		if clean:
+			remove(join(plugDest, pluginName))
+		else:
+			link(join(pluginDir, pluginName), join(plugDest, pluginName))
