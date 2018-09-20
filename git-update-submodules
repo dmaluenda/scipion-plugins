@@ -13,29 +13,32 @@ else
 	branch=devel
 fi
 
-function co_to_br_or_master() {
-
-	local br=devel
-	local git_status=$(git checkout $br 2>&1)
-	local error_str="error: pathspec 'devel' did not match*"
-
-	if [[ $git_status == $error_str ]]; then
-		echo "$br branch not found. Trying master..."
-    	git checkout master
-    else
-    	echo $git_status
-    fi
-	}
-
-
 scipionPlugins=`ls -d scipion-em-*`
 for plugin in $scipionPlugins
 do
 	echo 
 	cd $plugin
 	echo " --- Updating plugin: $plugin ---"
-	co_to_br_or_master $branch
-	git pull --prune;
+
+	# skipping working branches
+	git_status="$(git status 2> /dev/null)"
+  	if [[ ! ( $git_status =~ "working directory clean" ||
+  	          $git_status =~ "working tree clean" ) ]] ; then
+    	echo "  > > >  working branch found, pulling skipped  < < < "
+	else
+		# trying to checkout certain branch
+		git_status=$(git checkout $branch 2>&1)
+		error_str="error: pathspec 'devel' did not match*"
+
+		# if ceratin branch is not found we try master
+		if [[ $git_status == $error_str ]]; then
+			echo "$branch branch not found. Trying master..."
+	    	git checkout master
+	    else
+	    	echo $git_status
+	    fi
+	    git pull
+	fi
 	cd - >> /dev/null
 done
 
