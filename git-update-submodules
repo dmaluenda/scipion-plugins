@@ -5,7 +5,7 @@ if [ $# -gt 2 ]; then
 	echo "Use it to update all the submodules of this repository and "
 	echo "commit+push the changes (the commit will contain the today's date):"
 	echo ""
-	echo " -> usage: git-update-submodules [branch=devel]"
+	echo " -> usage: git-update-submodules [branch=devel/master]"
 	echo ""
 elif [ $# -eq 1 ]; then
 	branch=$1
@@ -13,7 +13,21 @@ else
 	branch=devel
 fi
 
-git submodule foreach "git checkout $branch; git pull --prune; echo "
+function co_to_br_or_master() {
+
+	local git_status=$(git checkout $1 2>&1)
+	local error_str="error: pathspec 'devel' did not match*"
+
+	if [[ $git_status == $error_str ]]; then
+		echo "$1 branch not found. Trying master..."
+    	git checkout master
+    else
+    	echo $git_status
+    fi
+	}
+export -f co_to_br_or_master
+
+git submodule foreach "co_to_br_or_master $branch; git pull --prune; echo "
 
 cmName="Updating the submodules for $branch branch on $(date +"%d/%m/%Y")"
 echo "Commiting it with name '$cmName'"
