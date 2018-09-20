@@ -27,16 +27,16 @@ function co_to_br_or_master() {
     fi
 	}
 
-git submodule foreach "export git_status=$(git checkout $branch 2>&1);
-                       export error_str="'error: pathspec*'"
-                       if [[ $git_status == $error_str ]]
-                       then
-                       	 echo "$br branch not found. Trying master..."
-                       	 git checkout master
-                       else
-                       	 echo $git_status
-                       fi
-                       git pull --prune; echo "
+
+scipionPlugins=`ls -d scipion-em-*`
+for plugin in $scipionPlugins
+do
+	cd $plugin
+	co_to_br_or_master $branch
+	git pull --prune;
+	echo 
+	cd -
+done
 
 cmName="Updating the submodules for $branch branch on $(date +"%d/%m/%Y")"
 echo "Commiting it with name '$cmName'"
