@@ -28,7 +28,8 @@ function co_to_br_or_master() {
 	}
 
 git submodule foreach "export git_status=$(git checkout $branch 2>&1);
-                       if [[ $git_status == "error: pathspec 'devel' did not match*" ]]
+                       export error_str="error: pathspec 'devel' did not match*"
+                       if [[ $git_status == $error_str ]]
                        then
                        	 echo "$br branch not found. Trying master..."
                        	 git checkout master
