@@ -25,7 +25,7 @@ function co_to_br_or_master() {
     	echo $git_status
     fi
 	}
-export -f co_to_br_or_master
+# export -f co_to_br_or_master
 
 git submodule foreach ""$(declare -pf co_to_br_or_master); co_to_br_or_master $branch"; git pull --prune; echo "
 
