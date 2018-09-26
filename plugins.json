@@ -2,7 +2,7 @@
     "xmipp3": {
        "name":"xmipp3",
        "pipName": "xmipp3",
-       "pluginSourceUrl":"home/malu/XmippBundle/src/scipion-em-xmipp"
+       "pluginSourceUrl":"/home/malu/xmipp-bundle/src/scipion-em-xmipp"
     },
     "scipion-em-emxlib": {
         "pipName": "scipion-em-emxlib", 
