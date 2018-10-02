@@ -3,42 +3,42 @@
         "pipName": "scipion-em-xmipp", 
         "id": 7, 
         "name": "xmipp3",
-       "pluginSourceUrl":"/home/malu/xmipp-bundle/src/scipion-em-xmipp"
+       "pluginSourceUrl":"/home/dmaluenda/xmipp-bundle/src/scipion-em-xmipp"
     },
     "scipion-em-emxlib": {
         "pipName": "scipion-em-emxlib", 
         "id": 1, 
         "name": "emxlib",
-	"pluginSourceUrl": "/home/malu/plugins2scipion/scipion-em-emxlib"
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-emxlib"
     },
     "scipion-em-appion": {
         "pipName": "scipion-em-appion", 
         "id": 2, 
         "name": "appion",
-	"pluginSourceUrl": "/home/malu/plugins2scipion/scipion-em-appion"
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-appion"
     },
 	"scipion-em-locscale": {
         "pipName": "scipion-em-locscale", 
         "id": 3, 
         "name": "locscale",
-	"pluginSourceUrl": "/home/malu/plugins2scipion/scipion-em-locscale"
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-locscale"
     },
 	"scipion-em-resmap": {
         "pipName": "scipion-em-resmap", 
         "id": 4, 
         "name": "resmap",
-	"pluginSourceUrl": "/home/malu/plugins2scipion/scipion-em-resmap"
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-resmap"
     },
 	"scipion-em-localrec": {
         "pipName": "scipion-em-localrec", 
         "id": 5, 
         "name": "localrec",
-	"pluginSourceUrl": "/home/malu/plugins2scipion/scipion-em-localrec"
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-localrec"
     },
 	"scipion-em-relion": {
         "pipName": "scipion-em-relion", 
         "id": 6, 
         "name": "relion",
-	"pluginSourceUrl": "/home/malu/plugins2scipion/scipion-em-relion"
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-relion"
     }
 }
