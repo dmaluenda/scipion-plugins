@@ -1,43 +1,127 @@
 {
     "scipion-em-xmipp": {
         "pipName": "scipion-em-xmipp", 
-        "id": 7, 
+        "id": 1, 
         "name": "xmipp3",
        "pluginSourceUrl":"/home/dmaluenda/xmipp-bundle/src/scipion-em-xmipp"
     },
-    "scipion-em-emxlib": {
-        "pipName": "scipion-em-emxlib", 
-        "id": 1, 
-        "name": "emxlib",
-	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-emxlib"
-    },
-    "scipion-em-appion": {
+	"scipion-em-appion": {
         "pipName": "scipion-em-appion", 
         "id": 2, 
         "name": "appion",
 	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-appion"
     },
-	"scipion-em-locscale": {
-        "pipName": "scipion-em-locscale", 
+	"scipion-em-atsas": {
+        "pipName": "scipion-em-atsas", 
         "id": 3, 
-        "name": "locscale",
-	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-locscale"
+        "name": "atsas",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-atsas"
     },
-	"scipion-em-resmap": {
-        "pipName": "scipion-em-resmap", 
+	"scipion-em-bamfordlab": {
+        "pipName": "scipion-em-bamfordlab", 
         "id": 4, 
-        "name": "resmap",
-	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-resmap"
+        "name": "bamfordlab",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-bamfordlab"
     },
+	"scipion-em-bsoft": {
+        "pipName": "scipion-em-bsoft", 
+        "id": 5, 
+        "name": "bsoft",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-bsoft"
+    },
+	"scipion-em-chimera": {
+        "pipName": "scipion-em-chimera", 
+        "id": 6, 
+        "name": "chimera",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-chimera"
+    },
+	"scipion-em-cryoef": {
+        "pipName": "scipion-em-cryoef", 
+        "id": 7, 
+        "name": "cryoef",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-cryoef"
+    },
+    "scipion-em-emxlib": {
+        "pipName": "scipion-em-emxlib", 
+        "id": 8, 
+        "name": "emxlib",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-emxlib"
+    },
+	"scipion-em-gautomatch": {
+        "pipName": "scipion-em-gautomatch", 
+        "id": 9, 
+        "name": "gautomatch",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-gautomatch"
+	},
+	"scipion-em-gctf": {
+        "pipName": "scipion-em-gctf", 
+        "id": 10, 
+        "name": "gctf",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-gctf"
+	},
+	"scipion-em-grigoriefflab": {
+        "pipName": "scipion-em-grigoriefflab", 
+        "id": 11, 
+        "name": "grigoriefflab",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-grigoriefflab"
+	},
+	"scipion-em-imagic": {
+        "pipName": "scipion-em-imagic", 
+        "id": 12, 
+        "name": "imagic",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-imagic"
+	},
 	"scipion-em-localrec": {
         "pipName": "scipion-em-localrec", 
-        "id": 5, 
+        "id": 13, 
         "name": "localrec",
 	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-localrec"
     },
+	"scipion-em-locscale": {
+        "pipName": "scipion-em-locscale", 
+        "id": 14, 
+        "name": "locscale",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-locscale"
+    },
+	"scipion-em-motioncor": {
+        "pipName": "scipion-em-motioncor", 
+        "id": 15, 
+        "name": "motioncor",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-motioncor"
+    },
+	"scipion-em-nysbc": {
+        "pipName": "scipion-em-nysbc", 
+        "id": 16, 
+        "name": "nysbc",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-nysbc"
+    },
+	"scipion-em-powerfit": {
+        "pipName": "scipion-em-powerfit", 
+        "id": 18, 
+        "name": "powerfit",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-powerfit"
+    },
+	"scipion-em-resmap": {
+        "pipName": "scipion-em-resmap", 
+        "id": 19, 
+        "name": "resmap",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-resmap"
+    },
+	"scipion-em-simple": {
+        "pipName": "scipion-em-simple", 
+        "id": 20, 
+        "name": "simple",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-simple"
+    },
+	"scipion-em-spider": {
+        "pipName": "scipion-em-spider", 
+        "id": 21, 
+        "name": "spider",
+	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-spider"
+    },
 	"scipion-em-relion": {
         "pipName": "scipion-em-relion", 
-        "id": 6, 
+        "id": 22, 
         "name": "relion",
 	"pluginSourceUrl": "/home/dmaluenda/plugins2scipion/scipion-em-relion"
     }
