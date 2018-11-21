@@ -1,6 +1,15 @@
 # scipion-plugins
 A repo grouping all scipion plugins (except xmipp) as git-submodules
 
+## Get started:
+
+ ```
+ cd whereever/you/want
+ git clone https://github.com/dmaluenda/scipion-plugins [dirName]
+ cd scipion-plugins    # or dirName if passed above
+ git submodule updade --init
+ ```
+
 ## Utils:
 
  - Update all the submodules:
@@ -10,7 +19,7 @@ A repo grouping all scipion plugins (except xmipp) as git-submodules
   ```
   Use it to update all the submodules [in certain branch] of this repository and commit+push the changes (the commit will contain the today's date in the message)
 
- - Install all the plugins 
+ - Install all the plugins via symbolic link or setting the PYTHONPATH env.var.
   ```
   ./plugins-register [options]
   
