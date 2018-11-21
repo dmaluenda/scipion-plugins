@@ -9,8 +9,9 @@ ph = expanduser
 def usage(msg=''):
 	print(msg+
 		  "\n -help:\n"
-		  "Use it to register all the plugins inside the PLUGINS_HOME and XMIPP_HOME\n"
-	      "to scipion. It's done via symbolic link (default) or via PYTHONPATH (-env)\n"
+		  "Use it to install all the plugins inside the PLUGINS_HOME and XMIPP_HOME\n"
+	      "to scipion. It's done via 'pip --devel' (default), via symbolic link (-sym)\n"
+	      "or via PYTHONPATH (-env)\n"
 	      "\n"
 	      " -> usage: plugins-register [options]\n"
 	      "       options: SCIPION_HOME  = ~/scipion\n"
@@ -18,8 +19,8 @@ def usage(msg=''):
 	      "                XMIPP_HOME    = ~/xmipp-bundle\n"
 	      "                XMIPP_VERSION = X.YY:MM (should match with the config file. Empty allowed)  \n"
 	      "                -noBin: to avoid the install of the Xmipp software"
-	      "                -env : to set the PYTHONPATH instead of making a symbolic link\n"
-	      "                -clean: remove all the plugins. By link (default) or PYTHONPATH\n"
+	      "                -sym or -env: to make a sym. link or to set the PYTHONPATH. \n"
+	      "                -clean: uninstall all the plugins. -sym or -env is available.\n"
 	      "\n"
 	      " -> example: plugins-register SCIPION_HOME=~/scipion-pluginized PLUGINS_HOME=~/plugins2scipion\n")
 	sys.exit()
@@ -63,7 +64,7 @@ def findPlugName(pluginDir):
 
 print 
 
-mode = 'ln'
+mode = 'pip'
 clean = False
 noBin = False
 argOk = True
@@ -75,6 +76,8 @@ for arg in sys.argv[1:]:
 	if arg.startswith('-'):
 		if arg == '-env':
 			mode = 'env'
+		elif arg == '-sym':
+			mode = 'sym'
 		elif arg == '-clean':
 			clean = True
 		elif arg == '-noBin':
@@ -133,7 +136,7 @@ if mode == 'env':
 		print("")
 		print("  export PYTHONPATH=%s" % os.environ.get('PYTHONPATH'))
 
-else:
+elif mode == 'sym':
 
 	plugDest = join(SCIPION_HOME,"software","lib","python2.7","site-packages")
 
@@ -155,8 +158,21 @@ else:
 		else:
 			link(join(pluginDir, pluginName), join(plugDest, pluginName))
 
+else:
+
+	oldCwd = os.getcwd()
+	os.chdir(SCIPION_HOME)
+	binStr = '--noBin' if noBin else ''
+	for plugin in scipionPlugins:
+		pluginDir = join(PLUGINS_HOME, plugin)
+		ok = os.system('./scipion installp -p %s --devel%s' % (pluginDir, binStr))
+
+	ok = os.system('./scipion installp -p %s --devel --noBin' 
+		           % join(XMIPP_HOME,  'src' ,'scipion-em-xmipp'))
+
 if not noBin and not clean:
-	link(join(XMIPP_HOME,'build'), join(SCIPION_HOME,"software","em",'xmipp%s'%XMIPP_VERSION))
+	link(join(XMIPP_HOME,'build'), 
+		 join(SCIPION_HOME,"software", "em", 'xmipp%s' % XMIPP_VERSION))
 
 
 print
