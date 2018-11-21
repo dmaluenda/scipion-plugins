@@ -39,7 +39,7 @@ do
 	        else
 	    	    echo $git_status
 	        fi
-            echo "git pull"
+            git pull
 	fi
 	cd - >> /dev/null
 done
