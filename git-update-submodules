@@ -5,7 +5,9 @@ if [ $# -gt 2 ]; then
 	echo "Use it to update all the submodules of this repository and "
 	echo "commit+push the changes (the commit will contain the today's date):"
 	echo ""
-	echo " -> usage: git-update-submodules [branch=devel/master]"
+	echo " -> usage: git-update-submodules [branch]"
+        echo ""
+        echo "default branch is devel. If branch does NOT exist, we try master."
 	echo ""
 elif [ $# -eq 1 ]; then
 	branch=$1
@@ -16,7 +18,7 @@ fi
 scipionPlugins=`ls -d scipion-em-*`
 for plugin in $scipionPlugins
 do
-	echo 
+	echo ""
 	cd $plugin
 	echo " ---  Updating plugin: $plugin  ---"
 
@@ -28,16 +30,16 @@ do
 	else
 		# trying to checkout certain branch
 		git_status=$(git checkout $branch 2>&1)
-		error_str="error: pathspec 'devel' did not match*"
+		error_str="error: pathspec '$branch' did not match*"
 
 		# if ceratin branch is not found we try master
 		if [[ $git_status == $error_str ]]; then
 			echo "$branch branch not found. Trying master..."
 	    	git checkout master
-	    else
-	    	echo $git_status
-	    fi
-	    git pull
+	        else
+	    	    echo $git_status
+	        fi
+            echo "git pull"
 	fi
 	cd - >> /dev/null
 done
