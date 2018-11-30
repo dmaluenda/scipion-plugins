@@ -18,7 +18,7 @@ def usage(msg=''):
 	      "                PLUGINS_HOME  = ~/scipion-em\n"
 	      "                XMIPP_HOME    = ~/xmipp-bundle\n"
 	      "                XMIPP_VERSION = X.YY:MM (should match with the config file. Empty allowed)  \n"
-	      "                -noBin: to avoid the install of the Xmipp software"
+	      "                -noBin: to avoid the install of the Xmipp software\n"
 	      "                -sym or -env: to make a sym. link or to set the PYTHONPATH. \n"
 	      "                -clean: uninstall all the plugins. -sym or -env is available.\n"
 	      "\n"
