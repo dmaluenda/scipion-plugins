@@ -14,11 +14,12 @@ def usage(msg=''):
 	      "or via PYTHONPATH (-env)\n"
 	      "\n"
 	      " -> usage: plugins-register [options]\n"
-	      "       options: SCIPION_HOME  = ~/scipion\n"
+	      "       options: SCIPION_CMD   = ./scipion\n"
+	      "                SCIPION_HOME  = ~/scipion\n"
 	      "                PLUGINS_HOME  = ~/scipion-em\n"
 	      "                XMIPP_HOME    = ~/xmipp-bundle\n"
 	      "                XMIPP_VERSION = X.YY:MM (should match with the config file. Empty allowed)  \n"
-	      "                -noBin: to avoid the install of the Xmipp software"
+	      "                -noBin: to avoid the install of the Xmipp software\n"
 	      "                -sym or -env: to make a sym. link or to set the PYTHONPATH. \n"
 	      "                -clean: uninstall all the plugins. -sym or -env is available.\n"
 	      "\n"
@@ -68,6 +69,7 @@ mode = 'pip'
 clean = False
 noBin = False
 argOk = True
+SCIPION_CMD  = './scipion'
 SCIPION_HOME = ph('~/scipion')
 PLUGINS_HOME = ph('~/scipion-em')
 XMIPP_HOME   = ph('~/xmipp-bundle')
@@ -92,6 +94,8 @@ for arg in sys.argv[1:]:
 			PLUGINS_HOME = ph(argV)
 		elif arg.startswith('SCIPION_HOME='):
 			SCIPION_HOME = ph(argV)
+		elif arg.startswith('SCIPION_CMD='):
+			SCIPION_CMD = argV
 		elif arg.startswith('XMIPP_VERSION='):
 			XMIPP_VERSION = '-%s'%argV
 		else:
@@ -165,10 +169,11 @@ else:
 	binStr = '--noBin' if noBin else ''
 	for plugin in scipionPlugins:
 		pluginDir = join(PLUGINS_HOME, plugin)
-		ok = os.system('./scipion installp -p %s --devel%s' % (pluginDir, binStr))
+		ok = os.system('%s installp -p %s --devel%s' 
+			           % (SCIPION_CMD, pluginDir, binStr))
 
-	ok = os.system('./scipion installp -p %s --devel --noBin' 
-		           % join(XMIPP_HOME,  'src' ,'scipion-em-xmipp'))
+	ok = os.system('%s installp -p %s --devel --noBin' 
+		           % (SCIPION_CMD, join(XMIPP_HOME,  'src' ,'scipion-em-xmipp')))
 
 	os.chdir(oldCwd)
 
