@@ -61,3 +61,6 @@
 [submodule "scipion-em-locscale"]
 	path = scipion-em-locscale
 	url = https://github.com/scipion-em/scipion-em-locscale
+[submodule "scipion-em-sphire"]
+	path = scipion-em-sphire
+	url = https://github.com/scipion-em/scipion-em-sphire.git
