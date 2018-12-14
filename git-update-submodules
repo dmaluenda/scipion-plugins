@@ -21,6 +21,7 @@ git pull
 
 echo "Initializing some posible new submodules"
 git submodule update --init
+echo "...done"
 
 scipionPlugins=`ls -d scipion-em-*`
 for plugin in $scipionPlugins
