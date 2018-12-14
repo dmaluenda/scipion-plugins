@@ -12,16 +12,20 @@ if [ $# -gt 2 ]; then
 	echo ""
 #elif [ $# -eq 1 ]; then
 #	branch=$1
-else
-	branch=devel
+#else
+#	branch=devel
 fi
 
 echo "Pulling changes for the host repository"
 git pull
 
-echo "Initializing some posible new submodules"
-git submodule update --init
-echo "...done"
+if [ $# -eq 1 ]; then
+    if [ $1 == 'devel' ]; then
+        echo "Initializing some posible new submodules"
+        git submodule update --init
+        echo "...done"
+    fi
+fi
 
 scipionPlugins=`ls -d scipion-em-*`
 for plugin in $scipionPlugins
