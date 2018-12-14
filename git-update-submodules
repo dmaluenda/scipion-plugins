@@ -19,6 +19,9 @@ fi
 echo "Pulling changes for the host repository"
 git pull
 
+echo "Initializing some posible new submodules"
+git submodule update --init
+
 scipionPlugins=`ls -d scipion-em-*`
 for plugin in $scipionPlugins
 do
