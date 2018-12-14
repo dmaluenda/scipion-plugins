@@ -16,6 +16,7 @@ else
 	branch=devel
 fi
 
+echo "Pulling changes for the host repository"
 git pull
 
 scipionPlugins=`ls -d scipion-em-*`
