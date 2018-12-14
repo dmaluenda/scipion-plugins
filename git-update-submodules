@@ -7,13 +7,16 @@ if [ $# -gt 2 ]; then
 	echo ""
 	echo " -> usage: git-update-submodules [branch]"
         echo ""
-        echo "default branch is devel. If branch does NOT exist, we try master."
+        echo "If no branch is passed, the git checkout is skipped."
+        echo "If branch does NOT exist, we try master."
 	echo ""
-elif [ $# -eq 1 ]; then
-	branch=$1
+#elif [ $# -eq 1 ]; then
+#	branch=$1
 else
 	branch=devel
 fi
+
+git pull
 
 scipionPlugins=`ls -d scipion-em-*`
 for plugin in $scipionPlugins
@@ -28,6 +31,8 @@ do
   	          $git_status =~ "working tree clean" ) ]] ; then
     	echo "  > > >  working branch found, pulling skipped  < < < "
 	else
+            if [ $# -eq 1 ]; then
+                branch=$1
 		# trying to checkout certain branch
 		git_status=$(git checkout $branch 2>&1)
 		error_str="error: pathspec '$branch' did not match*"
@@ -39,6 +44,7 @@ do
 	        else
 	    	    echo $git_status
 	        fi
+            fi
             git pull
 	fi
 	cd - >> /dev/null
