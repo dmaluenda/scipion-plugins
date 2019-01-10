@@ -166,7 +166,7 @@ else:
 
 	oldCwd = os.getcwd()
 	os.chdir(SCIPION_HOME)
-	binStr = '--noBin' if noBin else ''
+	binStr = ' --noBin' if noBin else ''
 	for plugin in scipionPlugins:
 		pluginDir = join(PLUGINS_HOME, plugin)
 		ok = os.system('%s installp -p %s --devel%s' 
