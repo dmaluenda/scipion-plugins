@@ -7,7 +7,7 @@ A repo grouping all scipion plugins (except xmipp) as git-submodules
  cd whereever/you/want
  git clone https://github.com/dmaluenda/scipion-plugins [dirName]
  cd scipion-plugins    # or dirName if passed above
- git submodule updade --init
+ git submodule update --init
  ```
 
 ## Utils:
