@@ -49,7 +49,8 @@ do
 		# if ceratin branch is not found we try master
 		if [[ $git_status == $error_str ]]; then
 			echo "$branch branch not found. Trying master..."
-	    	git checkout master
+	    	        branch=master
+                        git checkout $branch
 	        else
 	    	    echo $git_status
 	        fi
