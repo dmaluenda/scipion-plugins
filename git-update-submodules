@@ -53,8 +53,10 @@ do
 	        else
 	    	    echo $git_status
 	        fi
+                git pull origin $branch
+            else
+                git pull
             fi
-            git pull
 	fi
 	cd - >> /dev/null
 done
