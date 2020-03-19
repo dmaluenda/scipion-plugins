@@ -176,10 +176,10 @@ else:
 	binStr = ' --noBin' if noBin else ''
 	for plugin in scipionPlugins:
 		pluginDir = join(PLUGINS_HOME, plugin)
-		ok = os.system('./scipion installp -p %s --devel%s' 
+		ok = os.system('./scipion3 installp -p %s --devel%s' 
 			           % (pluginDir, binStr))
 
-	ok = os.system('./scipion installp -p %s --devel%s' 
+	ok = os.system('./scipion3 installp -p %s --devel%s' 
 		           % (join(XMIPP_HOME,  'src' ,'scipion-em-xmipp'), binStr))
 
 	if not SCIPION_CONF.endswith('scipion.conf'):
