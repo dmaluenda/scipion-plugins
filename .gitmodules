@@ -64,3 +64,6 @@
 [submodule "scipion-em-sphire"]
 	path = scipion-em-sphire
 	url = https://github.com/scipion-em/scipion-em-sphire.git
+[submodule "scipion-em-cistem"]
+	path = scipion-em-cistem
+	url = https://github.com/scipion-em/scipion-em-cistem
