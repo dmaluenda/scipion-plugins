@@ -67,3 +67,6 @@
 [submodule "scipion-em-cistem"]
 	path = scipion-em-cistem
 	url = https://github.com/scipion-em/scipion-em-cistem
+[submodule "scipion-em-continuousflex"]
+	path = scipion-em-continuousflex
+	url = https://github.com/slajo/scipion-em-continuousflex.git
